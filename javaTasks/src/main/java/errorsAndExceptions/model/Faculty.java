@@ -3,12 +3,13 @@ package errorsAndExceptions.model;
 import errorsAndExceptions.exceptions.NoGroupException;
 import errorsAndExceptions.exceptions.NoStudentsException;
 import errorsAndExceptions.faculties.Faculties;
+
 import java.util.List;
 
 public class Faculty {
 
-private Faculties facultyName;
-private List<Group> groups;
+    private Faculties facultyName;
+    private List<Group> groups;
 
     public Faculty(Faculties facultyName, List<Group> groups) {
         this.facultyName = facultyName;
@@ -25,10 +26,10 @@ private List<Group> groups;
     }
 
     public double getAverageMathMark() throws NoGroupException {
-        if(groups.isEmpty()){
+        if (groups.isEmpty()) {
             throw new NoGroupException("need to add groups to faculty");
         }
-        int sum =0;
+        int sum = 0;
         for (Group group : groups) {
             try {
                 sum += group.getAverageMathMark();
@@ -36,6 +37,6 @@ private List<Group> groups;
                 e.printStackTrace();
             }
         }
-        return (double)sum/groups.size();
+        return (double) sum / groups.size();
     }
 }

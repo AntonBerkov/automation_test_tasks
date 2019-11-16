@@ -1,6 +1,6 @@
 package errorsAndExceptions.exceptions;
 
-public class NoGroupException extends Exception{
+public class NoGroupException extends Exception {
 
     public NoGroupException() {
     }

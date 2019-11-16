@@ -20,15 +20,16 @@ public class MainIO {
         if (file.exists() && file.isFile()) {
             ReadFile readFile = new ReadFile();
             readFile.read(file);
+        } else {
+            Movie fistfulOfDollars = new Movie("Fistful of Dollars.avi");
+            Movie goodBadUgly = new Movie("The Good, the Bad and the Ugly.avi");
+            Movie rambo = new Movie("First Blood.avi");
+            Movie predator = new Movie("Predator.avi");
+            Movie killbill = new Movie("Kill Bill.avi");
+            List<Movie> westerns = new ArrayList<>(Arrays.asList(fistfulOfDollars, goodBadUgly));
+            List<Movie> actions = new ArrayList<>(Arrays.asList(rambo, predator, killbill));
+            AddToFile addToFile = new AddToFile();
+            addToFile.addToFile(westerns, actions, argument);
         }
-        Movie fistfulOfDollars = new Movie("Fistful of Dollars.avi");
-        Movie goodBadUgly = new Movie("The Good, the Bad and the Ugly.avi");
-        Movie rambo = new Movie("First Blood.avi");
-        Movie predator = new Movie("Predator.avi");
-        Movie killbill = new Movie("Kill Bill.avi");
-        List<Movie> westerns = new ArrayList<>(Arrays.asList(fistfulOfDollars, goodBadUgly));
-        List<Movie> actions = new ArrayList<>(Arrays.asList(rambo, predator,killbill));
-        AddToFile addToFile = new AddToFile();
-        addToFile.addToFile(westerns, actions, argument);
     }
 }

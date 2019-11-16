@@ -1,6 +1,6 @@
 package threads.exceptions;
 
-public class WrongActionException extends Exception{
+public class WrongActionException extends Exception {
     public WrongActionException() {
     }
 

@@ -32,7 +32,6 @@ public class PastebinHomePage extends AbstractPage {
     }
 
     public PastebinHomePage sendContent(List<String> code, String titleContent) {
-   //     new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(pasteCode));
         for (String i : code) {
             pasteCode.sendKeys(i);
         }

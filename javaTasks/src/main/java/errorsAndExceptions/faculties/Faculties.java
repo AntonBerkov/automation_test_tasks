@@ -1,5 +1,5 @@
 package errorsAndExceptions.faculties;
 
-public enum  Faculties {
+public enum Faculties {
     FITU, FKSIS
 }

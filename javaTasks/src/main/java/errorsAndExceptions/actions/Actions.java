@@ -1,12 +1,12 @@
 package errorsAndExceptions.actions;
 
-        import errorsAndExceptions.exceptions.NoStudentsException;
-        import errorsAndExceptions.exceptions.NoSubjectsException;
-        import errorsAndExceptions.exceptions.WrongMarkException;
-        import errorsAndExceptions.model.Faculty;
-        import errorsAndExceptions.model.Group;
-        import errorsAndExceptions.model.Student;
-        import errorsAndExceptions.model.University;
+import errorsAndExceptions.exceptions.NoStudentsException;
+import errorsAndExceptions.exceptions.NoSubjectsException;
+import errorsAndExceptions.exceptions.WrongMarkException;
+import errorsAndExceptions.model.Faculty;
+import errorsAndExceptions.model.Group;
+import errorsAndExceptions.model.Student;
+import errorsAndExceptions.model.University;
 
 public class Actions {
     public void studentsAverageMark(University university) {
@@ -15,12 +15,12 @@ public class Actions {
         Group currentGroup = currentFaculty.getGroups().get(0);
         Student currentStudent = currentGroup.getStudents().get(1);
         try {
-            averageMark =currentStudent.getAverageMark();
+            averageMark = currentStudent.getAverageMark();
         } catch (NoSubjectsException | WrongMarkException e) {
             e.printStackTrace();
         }
         System.out.println(currentStudent.getName() + " " + averageMark);
-        
+
     }
 
     public void averageMarkInGroup(University university) {
@@ -36,6 +36,6 @@ public class Actions {
                 + currentGroup.getGroupNumber() + "= " + averageMark);
     }
 
-    
+
 }
 

@@ -18,8 +18,8 @@ public class University {
     }
 
     public double getAverageMathMark() throws NoFacultyException {
-        int sum =0;
-        if(faculties.isEmpty()){
+        int sum = 0;
+        if (faculties.isEmpty()) {
             throw new NoFacultyException("need to add faculty to university");
         }
         for (Faculty faculty : faculties) {
@@ -29,6 +29,6 @@ public class University {
                 e.printStackTrace();
             }
         }
-        return (double) sum/faculties.size();
+        return (double) sum / faculties.size();
     }
 }

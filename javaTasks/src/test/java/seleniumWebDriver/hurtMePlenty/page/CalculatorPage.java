@@ -1,10 +1,9 @@
 package seleniumWebDriver.hurtMePlenty.page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +28,10 @@ public class CalculatorPage extends AbstractPage {
         final String localSsdOption = "select_option_171";
         final String datacenterLocationOption = "select_option_185";
         final String commitedUsageOption = "select_option_83";
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         System.out.println(driver.getCurrentUrl());
-        driver.switchTo().frame("idIframe");
-        driver.findElements(By.xpath(computeEngineButton)).get(0).click();
+        driver.switchTo().frame("myFrame");
+        new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.presenceOfElementLocated(By.xpath(computeEngineButton)));
         driver.findElements(By.xpath(numberofInstancesField)).get(0).sendKeys(numberOfInstances);
         List<WebElement> selectIcon = driver.findElements(By.xpath(iconXpath));
         selectIcon.get(0).click();
@@ -48,12 +48,13 @@ public class CalculatorPage extends AbstractPage {
         componentWaiter(By.id(numberOfGpusOption)).click();
         selectGpu.get(6).click();
         componentWaiter(By.id(gpuTypeOption)).click();
-        List<WebElement> selectIconsAfterGpu = driver.findElements(By.xpath(iconXpath));
-        selectIconsAfterGpu.get(7).click();
+        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
+        new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.elementToBeClickable(selectGpu.get(7)));
+        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
         componentWaiter(By.id(localSsdOption)).click();
-        selectIconsAfterGpu.get(8).click();
+        selectGpu.get(8).click();
         componentWaiter(By.id(datacenterLocationOption)).click();
-        selectIconsAfterGpu.get(9).click();
+        selectGpu.get(9).click();
         componentWaiter(By.id(commitedUsageOption)).click();
         List<WebElement> addToEstimateButton = driver.findElements(By.xpath("//*[@aria-label='Add to Estimate']"));
         new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.elementToBeClickable(addToEstimateButton.get(0)));

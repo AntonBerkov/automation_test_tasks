@@ -38,7 +38,7 @@ public class WebDriverCloudTest {
         String calculatorTotalCost = calculatorPage.searchTotalCost();
         EmailPage emailPage = new EmailPage(driver).openPage();
         String emailTotalCost = emailPage.searchEmailTotalCost();
-        Assert.assertEquals(calculatorTotalCost,emailTotalCost);
+        Assert.assertEquals(calculatorTotalCost, emailTotalCost);
     }
 
     @AfterMethod

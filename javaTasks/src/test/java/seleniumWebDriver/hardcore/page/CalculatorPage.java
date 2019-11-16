@@ -26,8 +26,9 @@ public class CalculatorPage extends AbstractPage {
         final String localSsdOption = "select_option_171";
         final String datacenterLocationOption = "select_option_185";
         final String commitedUsageOption = "select_option_83";
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         System.out.println(driver.getCurrentUrl());
-        driver.switchTo().frame("idIframe");
+        driver.switchTo().frame("myFrame");
         driver.findElements(By.xpath(computeEngineButton)).get(0).click();
         driver.findElements(By.xpath(numberofInstancesField)).get(0).sendKeys(numberOfInstances);
         List<WebElement> selectIcon = driver.findElements(By.xpath(iconXpath));
@@ -45,22 +46,24 @@ public class CalculatorPage extends AbstractPage {
         componentWaiter(By.id(numberOfGpusOption)).click();
         selectGpu.get(6).click();
         componentWaiter(By.id(gpuTypeOption)).click();
-        List<WebElement> selectIconsAfterGpu = driver.findElements(By.xpath(iconXpath));
 
-        selectIconsAfterGpu.get(7).click();
+        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
+        new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.elementToBeClickable(selectGpu.get(7)));
+        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
+
         componentWaiter(By.id(localSsdOption)).click();
-        selectIconsAfterGpu.get(8).click();
+        selectGpu.get(8).click();
         componentWaiter(By.id(datacenterLocationOption)).click();
-        selectIconsAfterGpu.get(9).click();
+        selectGpu.get(9).click();
         componentWaiter(By.id(commitedUsageOption)).click();
         List<WebElement> addToEstimateButton = driver.findElements(By.xpath("//*[@aria-label='Add to Estimate']"));
         new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.elementToBeClickable(addToEstimateButton.get(0)));
         addToEstimateButton.get(0).click();
-        String emailAdress =createEmail();
-        ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
+        String emailAdress = createEmail();
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.close();
         driver.switchTo().window(tabs.get(0));
-        driver.switchTo().frame("idIframe");
+        driver.switchTo().frame("myFrame");
         driver.findElement(By.id("email_quote")).click();
         componentWaiter(By.xpath("//*[@ng-model='emailQuote.user.email']")).sendKeys(emailAdress);
         componentWaiter(By.xpath("//*[@aria-label='Send Email']")).click();
@@ -72,9 +75,9 @@ public class CalculatorPage extends AbstractPage {
                 .until(ExpectedConditions.elementToBeClickable(xpath));
     }
 
-    private String createEmail(){
-       EmailPage emailPage= new EmailPage(driver).openPage();
-       return emailPage.searchEmailAdress();
+    private String createEmail() {
+        EmailPage emailPage = new EmailPage(driver).openPage();
+        return emailPage.searchEmailAdress();
 
     }
 
@@ -92,8 +95,8 @@ public class CalculatorPage extends AbstractPage {
             if (value.charAt(i) == ':') {
                 value = value.substring(i + 2);
             }
-            if(value.contains(perMonthInfo)){
-                value=value.replaceAll(perMonthInfo,"");
+            if (value.contains(perMonthInfo)) {
+                value = value.replaceAll(perMonthInfo, "");
             }
         }
         return value;

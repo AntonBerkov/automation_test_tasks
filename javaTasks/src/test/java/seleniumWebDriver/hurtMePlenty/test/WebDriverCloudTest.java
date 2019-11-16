@@ -51,7 +51,7 @@ public class WebDriverCloudTest {
     @Test
     public void checkForTotalCostEquality() {
         String automaticTotalCost = calculatorPage.searchTotalCost();
-        Assert.assertEquals(automaticTotalCost, "USD 1,187.77 per 1 month");
+        Assert.assertEquals(automaticTotalCost, "USD 1,082.77 per 1 month");
     }
 
     @AfterMethod

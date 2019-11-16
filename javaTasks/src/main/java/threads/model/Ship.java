@@ -14,6 +14,7 @@ public class Ship {
         this.currentCapacity = currentCapacity;
         this.action = action;
     }
+
     public String getName() {
         return name;
     }
@@ -26,5 +27,7 @@ public class Ship {
         return currentCapacity;
     }
 
-    public Actions getAction() { return action; }
+    public Actions getAction() {
+        return action;
+    }
 }

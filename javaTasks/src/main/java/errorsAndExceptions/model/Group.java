@@ -11,7 +11,7 @@ public class Group {
     private int groupNumber;
     private List<Student> students;
 
-    public Group(int groupNumber, List<Student> students){
+    public Group(int groupNumber, List<Student> students) {
         this.groupNumber = groupNumber;
         this.students = students;
 
@@ -20,14 +20,16 @@ public class Group {
     public int getGroupNumber() {
         return groupNumber;
     }
+
     public List<Student> getStudents() {
         return students;
     }
+
     public double getAverageMathMark() throws NoStudentsException {
-        if(students.isEmpty()){
+        if (students.isEmpty()) {
             throw new NoStudentsException("need to add students to group");
         }
-        int sum=0;
+        int sum = 0;
         for (Student student : students) {
             for (int j = 0; j < student.getSubjects().size(); j++) {
                 Subject currentSubject = student.getSubjects().get(j);
@@ -40,6 +42,6 @@ public class Group {
                 }
             }
         }
-        return sum/students.size();
+        return sum / students.size();
     }
 }

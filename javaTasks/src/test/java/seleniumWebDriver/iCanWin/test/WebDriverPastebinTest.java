@@ -19,7 +19,7 @@ public class WebDriverPastebinTest {
 
     @Test(description = "Send info to pastebin")
     public void createNewPaste() {
-       new PastebinHomePage(driver)
+        new PastebinHomePage(driver)
                 .openPage()
                 .sendContent("Hello from WebDriver", "helloweb");
     }
