@@ -2,6 +2,7 @@ package framework.page;
 
 import framework.model.CalculatorInstances;
 import framework.util.JsScripts;
+import framework.util.XpathConverter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -9,39 +10,59 @@ import java.util.List;
 
 public class CalculatePage extends AbstractPage {
 
-    @FindBy(xpath = "//*[@class='md-select-icon']")
-    List<WebElement> ICON_XPATH;
+    @FindBy(id = "select_value_label_46")
+    private WebElement software;
 
-    @FindBy(xpath = "//*[@class='hexagon-in2']")
-    List<WebElement> COMPUTE_ENGINE_BUTTON;
+    @FindBy(id = "select_value_label_47")
+    private WebElement machineClass;
 
-    @FindBy(xpath = "//*[@name='quantity']")
-    List<WebElement> NUMBER_OF_INSTANCES_FIELD;
+    @FindBy(id = "select_value_label_49")
+    private WebElement machineType;
 
-    @FindBy(xpath = "//*[@class='md-container md-ink-ripple']")
-    List<WebElement> CHECK_GPU;
+    @FindBy(xpath = "//*[@placeholder='Number of GPUs']")
+    private WebElement numberOfGpu;
+
+    @FindBy(xpath = "//*[@placeholder='GPU type']")
+    private WebElement gpuType;
+
+    @FindBy(id = "select_value_label_50")
+    private WebElement localSsd;
+
+    @FindBy(id = "select_value_label_51")
+    private WebElement datacenterLocation;
+
+    @FindBy(id = "select_value_label_52")
+    private WebElement commitedUsage;
+
+
+    @FindBy(xpath = "//*[@class='tab-holder compute']")
+    private List<WebElement> computeEngineButton;
+
+    @FindBy(xpath = "//*[@ng-model='listingCtrl.computeServer.quantity']")
+    private WebElement numberOfInstancesField;
+
+    @FindBy(xpath = "//*[@ng-model='listingCtrl.computeServer.addGPUs']")
+    private WebElement checkGpu;
 
     @FindBy(id = "select_option_353")
-    WebElement NUMBER_OF_GPUS_OPTION;
+    private WebElement numberOfGpusOption;
 
     @FindBy(id = "select_option_360")
-    WebElement GPU_TYPE_OPTION;
+    private WebElement gpuTypeOption;
 
     @FindBy(id = "select_option_171")
-    WebElement LOCAL_SSD_OPTION;
+    private WebElement localSsdOption;
 
     @FindBy(id = "select_option_83")
-    WebElement COMMITED_USAGE_OPTION;
+    private WebElement commitedUsageOption;
 
-    @FindBy(xpath = "//*[@aria-label='Add to Estimate']")
-    List<WebElement> ADD_TO_ESTIMATE;
+    @FindBy(xpath = "//*[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']")
+    private WebElement addToEstimate;
 
     @FindBy(xpath = "//*[@class='md-title']")
-    List<WebElement> TOTAL_COST;
+    private List<WebElement> TOTALCOST;
 
     private static final String MAIN_FRAME = "myFrame";
-    private static final String SCROLL_INTO_VIEW = "arguments[0].scrollIntoView();";
-    private static final String ClICK_ON_ELEMENT = "arguments[0].click();";
     private static final String TOTAL_ESTIMATED_COST = "Total Estimated Cost: ";
     private static final String PER_MONTH_INFO = " per 1 month";
 
@@ -49,47 +70,47 @@ public class CalculatePage extends AbstractPage {
         super(driver);
     }
 
-
     public CalculatePage fillForm(CalculatorInstances instances) {
         driver.switchTo().frame(MAIN_FRAME);
-        COMPUTE_ENGINE_BUTTON.get(0).click();
-        NUMBER_OF_INSTANCES_FIELD.get(0).sendKeys(instances.getNumberOfInstances());
+        computeEngineButton.get(0).click();
+        toBeClickableWaiter(numberOfInstancesField).sendKeys(instances.getNumberOfInstances());
         selectIconOptions(instances);
-        componentWaiter(driver.findElement(By.id(instances.getMachineType()))).click();
-        componentWaiter(CHECK_GPU.get(0)).click();
-        selectGpuOPtions(instances);
-        componentWaiter(COMMITED_USAGE_OPTION).click();
-        componentWaiter(ADD_TO_ESTIMATE.get(0)).click();
+        toBeClickableWaiter(driver.findElement
+                (By.id(XpathConverter.convertMachineType(instances.getMachineType())))).click();
+        toBeClickableWaiter(checkGpu).click();
+        selectGpuOptions(instances);
+        toBeClickableWaiter(commitedUsageOption).click();
+        toBeClickableWaiter(addToEstimate).click();
         MailPage mailPage = new MailPage(driver);
         mailPage.sendMail();
         return this;
     }
 
     public void selectIconOptions(CalculatorInstances instances) {
-        ICON_XPATH.get(0).click();
-        componentWaiter(driver.findElement(By.xpath(instances.getSoftware()))).click();
-        ICON_XPATH.get(1).click();
-        componentWaiter(driver.findElements(By.xpath(instances.getMachineClass())).get(1)).click();
-        ICON_XPATH.get(4).click();
+        software.click();
+        toBeClickableWaiter(driver.findElement(By.xpath(XpathConverter.convertSoftware(instances.getSoftware())))).click();
+        machineClass.click();
+        toBeClickableWaiter(driver.findElements(By.xpath(XpathConverter.convertMachineClass(instances.getMachineClass()))).get(1)).click();
+        machineType.click();
     }
 
-    public void selectGpuOPtions(CalculatorInstances instances) {
-        ICON_XPATH.get(5).click();
-        componentWaiter(NUMBER_OF_GPUS_OPTION).click();
-        JsScripts.executeJs(driver, ICON_XPATH.get(6), ClICK_ON_ELEMENT);
-        componentWaiter(GPU_TYPE_OPTION).click();
-        JsScripts.executeJs(driver, ICON_XPATH.get(7), SCROLL_INTO_VIEW);
-        componentWaiter(ICON_XPATH.get(7));
-        JsScripts.executeJs(driver, ICON_XPATH.get(7), ClICK_ON_ELEMENT);
-        componentWaiter(LOCAL_SSD_OPTION).click();
-        ICON_XPATH.get(8).click();
-        componentWaiter(driver.findElement(By.id(instances.getLocation()))).click();
-        ICON_XPATH.get(9).click();
+    public void selectGpuOptions(CalculatorInstances instances) {
 
+        toBeClickableWaiter(numberOfGpu).click();
+        toBeClickableWaiter(numberOfGpusOption).click();
+        JsScripts.clickOnElementJs(driver, gpuType);
+        toBeClickableWaiter(gpuTypeOption).click();
+        JsScripts.scrollIntoViewJs(driver, localSsd);
+        toBeClickableWaiter(localSsd);
+        JsScripts.clickOnElementJs(driver, localSsd);
+        toBeClickableWaiter(localSsdOption).click();
+        datacenterLocation.click();
+        toBeClickableWaiter(driver.findElement(By.id(XpathConverter.convertLocation(instances.getLocation())))).click();
+        commitedUsage.click();
     }
 
     public String searchTotalCost() {
-        return splitContentValue(TOTAL_COST.get(5).getText());
+        return splitContentValue(TOTALCOST.get(5).getText());
     }
 
     public static String splitContentValue(String value) {

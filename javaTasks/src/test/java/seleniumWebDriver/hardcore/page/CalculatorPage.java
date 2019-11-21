@@ -47,9 +47,9 @@ public class CalculatorPage extends AbstractPage {
         selectGpu.get(6).click();
         componentWaiter(By.id(gpuTypeOption)).click();
 
-        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
+        jse.executeScript("arguments[0].clickOnElementJs();", selectGpu.get(7));
         new WebDriverWait(driver, TIME_TO_WAIT).until(ExpectedConditions.elementToBeClickable(selectGpu.get(7)));
-        jse.executeScript("arguments[0].executeJs();", selectGpu.get(7));
+        jse.executeScript("arguments[0].clickOnElementJs();", selectGpu.get(7));
 
         componentWaiter(By.id(localSsdOption)).click();
         selectGpu.get(8).click();

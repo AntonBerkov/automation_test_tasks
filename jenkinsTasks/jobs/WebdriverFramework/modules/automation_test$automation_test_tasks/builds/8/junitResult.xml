@@ -1,0 +1,24 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<result plugin="junit@1.28">
+  <suites>
+    <suite>
+      <file>D:\Soft\Jenkins\workspace\WebdriverFramework\javaTasks\target\surefire-reports\TEST-TestSuite.xml</file>
+      <name>TestSuite</name>
+      <duration>80.952</duration>
+      <time>80.952</time>
+      <enclosingBlocks/>
+      <enclosingBlockNames/>
+      <cases>
+        <case>
+          <duration>32.785</duration>
+          <className>framework.test.EmailTotalCostTest</className>
+          <testName>checkForEmailTotalCost</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+      </cases>
+    </suite>
+  </suites>
+  <duration>80.952</duration>
+  <keepLongStdio>false</keepLongStdio>
+</result>

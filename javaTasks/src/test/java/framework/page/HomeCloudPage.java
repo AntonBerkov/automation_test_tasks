@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 public class HomeCloudPage extends AbstractPage {
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     @FindBy(xpath = "//*[@name='q']")
-    WebElement searchContent;
+    private WebElement searchContent;
 
     public HomeCloudPage(WebDriver driver) {
         super(driver);
@@ -20,9 +20,9 @@ public class HomeCloudPage extends AbstractPage {
     }
 
     public HomeCloudPage searchCalculator(String searchForCalculatorString) {
-        searchContent.click();
-        searchContent.sendKeys(searchForCalculatorString);
-        searchContent.sendKeys(Keys.ENTER);
+        toBeClickableWaiter(searchContent).click();
+        toBeClickableWaiter(searchContent).sendKeys(searchForCalculatorString);
+        toBeClickableWaiter(searchContent).sendKeys(Keys.ENTER);
         return this;
     }
 }

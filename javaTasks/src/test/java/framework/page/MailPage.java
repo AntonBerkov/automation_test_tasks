@@ -9,27 +9,25 @@ import java.util.ArrayList;
 public class MailPage extends AbstractPage {
 
     @FindBy(id = "email_quote")
-    WebElement EMAIL_QUOTE;
+    private WebElement emailQuote;
 
     @FindBy(xpath = "//*[@ng-model='emailQuote.user.email']")
-    WebElement USER_MAIL_QUOTE;
+    private WebElement userMailQuote;
 
     @FindBy(id = "mailAddress")
-    WebElement MAIL_ADRESS;
+    private WebElement mailAdress;
 
     @FindBy(xpath = "//*[@aria-label='Send Email']")
-    WebElement SEND_MAIL;
+    private WebElement sendMail;
 
     @FindBy(id = "ui-id-1")
-    WebElement EMAIL_BAR;
+    private WebElement emailBar;
 
     @FindBy(xpath = "//*[contains(text(),'Estimated Monthly Cost:')]")
-    WebElement MONTHLY_COST;
+    private WebElement monthlyCost;
 
     private static final String EMAIL_URL = "https://10minutemail.com";
-    private static final String JS_OPEN_WINDOW = "window.open();";
     private static final String MAIN_FRAME = "myFrame";
-    private static final String SCROLL_DOWN = "window.scrollTo(0, document.body.scrollHeight)";
     private static final String VALUE = "value";
     private static final String ESTIMATED_MONTHLY_COST = "Estimated Monthly Cost: ";
 
@@ -40,34 +38,35 @@ public class MailPage extends AbstractPage {
     public void sendMail() {
         openPage();
         String emailAdress = searchEmailAdress();
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.close();
-        tabs.remove(tabs.size() - 1);
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
-        driver.switchTo().frame(MAIN_FRAME);
-        EMAIL_QUOTE.click();
-        USER_MAIL_QUOTE.sendKeys(emailAdress);
-        SEND_MAIL.click();
+        if (System.getProperty("browser").equals("chrome")) {
+            driver.switchTo().frame(MAIN_FRAME);
+        }
+        emailQuote.click();
+        userMailQuote.sendKeys(emailAdress);
+        toBeClickableWaiter(sendMail);
+        JsScripts.clickOnElementJs(driver, sendMail);
     }
 
     public MailPage openPage() {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript(JS_OPEN_WINDOW);
+        JsScripts.openWindowJs(driver);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(tabs.size() - 1));
         driver.get(EMAIL_URL);
         return this;
     }
 
     public String searchEmailAdress() {
-        return MAIL_ADRESS.getAttribute(VALUE);
+        return mailAdress.getAttribute(VALUE);
     }
 
     public String searchEmailTotalCost() {
-        JsScripts.executeJs(driver, SCROLL_DOWN);
-        componentWaiter(EMAIL_BAR).click();
+        JsScripts.scrollDownJs(driver);
+        emailWaiter(emailBar).click();
 
-        String emailTotalCost = componentWaiter(MONTHLY_COST).getText();
+        String emailTotalCost = emailWaiter(monthlyCost).getText();
         return emailTotalCostSplit(emailTotalCost);
     }
 
